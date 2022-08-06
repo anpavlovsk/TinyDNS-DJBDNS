@@ -80,6 +80,29 @@ Output
 root@debian11:/# svstat /service/tinydns
 /service/tinydns: up (pid 2736) 202 seconds
 ````
+### Running a DNS cache on a workstation
+As root, create UNIX accounts named dnscache.
+````
+/usr/sbin/useradd -s /sbin/nologin -d /dev/null dnscache
+````
+As root, create an /etc/dnscache service directory:
+````
+dnscache-conf dnscache dnslog /etc/dnscache 192.168.1.16
+````
+This directory contains logs and a few configuration files that you can change later.
+As root, tell svscan about the new service, and use svstat to check that the service is up:
+````
+ln -s /etc/dnscache /service
+sleep 5
+svstat /service/dnscache
+````
+Output
+````
+root@debian11:/# svstat /service/dnscache
+/service/dnscache: up (pid 2737) 1255 seconds
+````
+
+
 Checking
 ````
 ps fax
