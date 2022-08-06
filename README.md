@@ -61,7 +61,7 @@ As root, create UNIX accounts named tinydns and dnslog.
 ````
 /usr/sbin/useradd -s /bin/false tinydns
 /usr/sbin/useradd -s /bin/false dnslog
-```
+````
 As root, create an /etc/tinydns service directory configured with the IP address of the DNS server:
 ````
 tinydns-conf tinydns dnslog /etc/tinydns 127.0.0.1
@@ -75,3 +75,4 @@ ln -s /etc/tinydns /service
 sleep 5
 svstat /service/tinydns
 ````
+Output
