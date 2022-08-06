@@ -56,3 +56,22 @@ echo gcc -O2 -include /usr/include/errno.h > conf-cc
 make 
 make setup check
 ````
+### Running djbdns server
+As root, create UNIX accounts named tinydns and dnslog.
+````
+/usr/sbin/useradd -s /bin/false tinydns
+/usr/sbin/useradd -s /bin/false dnslog
+```
+As root, create an /etc/tinydns service directory configured with the IP address of the DNS server:
+````
+tinydns-conf tinydns dnslog /etc/tinydns 127.0.0.1
+````
+This directory contains logs and configuration files that you will change later.
+The IP address must be configured on this computer. The IP address must not have a DNS cache or any other port-53 service. One computer can run a DNS server alongside a DNS cache as long as they are on separate IP addresses. The standard setup for small networks is to put a DNS cache on a private address such as 127.0.0.1 or 10.53.0.1, and a DNS server on a public address.
+
+As root, tell svscan about the new service, and use svstat to check that the service is up:
+````
+ln -s /etc/tinydns /service
+sleep 5
+svstat /service/tinydns
+````
