@@ -76,3 +76,7 @@ sleep 5
 svstat /service/tinydns
 ````
 Output
+````
+root@debian11:/# svstat /service/tinydns
+/service/tinydns: up (pid 2736) 202 seconds
+````
