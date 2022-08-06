@@ -80,3 +80,22 @@ Output
 root@debian11:/# svstat /service/tinydns
 /service/tinydns: up (pid 2736) 202 seconds
 ````
+Checking
+````
+ps fax
+````
+Output
+````
+2728 pts/0    S      0:00 /bin/sh /command/svscanboot
+   2730 pts/0    S      0:00  \_ svscan /service
+   2732 pts/0    S      0:00  |   \_ supervise tinydns
+   2736 pts/0    S      0:00  |   |   \_ /usr/local/bin/tinydns
+   2733 pts/0    S      0:00  |   \_ supervise log
+   2738 pts/0    S      0:00  |   |   \_ multilog t ./main
+   2734 pts/0    S      0:00  |   \_ supervise dnscache
+   2737 pts/0    S      0:00  |   |   \_ /usr/local/bin/dnscache
+   2735 pts/0    S      0:00  |   \_ supervise log
+   2739 pts/0    S      0:00  |       \_ multilog t ./main
+   2731 pts/0    S      0:00  \_ readproctitle service errors: .............................................................................................................................................
+root@debian11:/# 
+````
