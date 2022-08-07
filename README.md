@@ -122,3 +122,49 @@ Output
    2731 pts/0    S      0:00  \_ readproctitle service errors: .............................................................................................................................................
 root@debian11:/# 
 ````
+As root, put
+````
+nameserver 192.168.1.16
+````
+into /etc/resolv.conf, replacing any previous nameserver lines. You can skip this step if there are no nameserver lines or if /etc/resolv.conf doesn't exist.
+````
+cd /etc/dnscache/root/ip
+touch 192.168
+````
+````
+dig google.com
+````
+output
+````
+; <<>> DiG 9.16.27-Debian <<>> google.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 62292
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;google.com.			IN	A
+
+;; ANSWER SECTION:
+google.com.		276	IN	A	172.217.16.46
+
+;; Query time: 327 msec
+;; SERVER: 192.168.1.1#53(192.168.1.1)
+;; WHEN: Sun Aug 07 03:30:32 EDT 2022
+;; MSG SIZE  rcvd: 55
+
+````
+Restart dnscache 
+````
+svc -t /service/dnscache
+````
+Output
+````
+
+````
+Check whether you can look up addresses of some Internet hosts:
+
+     dnsip www.cnn.com
+     dnsip www.fsf.org
