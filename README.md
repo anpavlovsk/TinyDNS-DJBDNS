@@ -162,6 +162,24 @@ svc -t /service/dnscache
 ````
 Output
 ````
+root@debian11:~# dig google.com
+
+; <<>> DiG 9.16.27-Debian <<>> google.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 41745
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;google.com.			IN	A
+
+;; ANSWER SECTION:
+google.com.		119	IN	A	142.250.75.14
+
+;; Query time: 0 msec
+;; SERVER: 192.168.1.16#53(192.168.1.16)
+;; WHEN: Sun Aug 07 04:06:25 EDT 2022
+;; MSG SIZE  rcvd: 44
 
 ````
 Check whether you can look up addresses of some Internet hosts:
