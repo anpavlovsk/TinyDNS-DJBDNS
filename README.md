@@ -182,7 +182,73 @@ google.com.		119	IN	A	142.250.75.14
 ;; MSG SIZE  rcvd: 44
 
 ````
-Check whether you can look up addresses of some Internet hosts:
+### Adding records to tynidns
+````
+cd /etc/service/tinydns/root/ 
+./add-ns anpavlovsk.com 192.168.1.16 
+./add-ns 0.168.192.in-addr.arpa 192.168.1.16
+./add-host anpavlovsk.com 192.168.1.16 
+./add-host mail.anpavlovsk.com 192.168.1.100 
+make
+````
+Checking
+````
+dig anpavlovsk.com @127.0.0.1
+````
 
-     dnsip www.cnn.com
-     dnsip www.fsf.org
+Output
+````
+; <<>> DiG 9.16.27-Debian <<>> anpavlovsk.com @127.0.0.1
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 46900
+;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; QUESTION SECTION:
+;anpavlovsk.com.			IN	A
+
+;; ANSWER SECTION:
+anpavlovsk.com.		86400	IN	A	192.168.1.16
+
+;; AUTHORITY SECTION:
+anpavlovsk.com.		259200	IN	NS	a.ns.anpavlovsk.com.
+
+;; ADDITIONAL SECTION:
+a.ns.anpavlovsk.com.	259200	IN	A	192.168.1.16
+
+;; Query time: 3 msec
+;; SERVER: 127.0.0.1#53(127.0.0.1)
+;; WHEN: Sun Aug 07 04:22:16 EDT 2022
+;; MSG SIZE  rcvd: 83
+
+````
+````
+root@debian11:~# dig mail.anpavlovsk.com @127.0.0.1
+````
+Output
+````
+; <<>> DiG 9.16.27-Debian <<>> mail.anpavlovsk.com @127.0.0.1
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 49053
+;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; QUESTION SECTION:
+;mail.anpavlovsk.com.		IN	A
+
+;; ANSWER SECTION:
+mail.anpavlovsk.com.	86400	IN	A	192.168.1.100
+
+;; AUTHORITY SECTION:
+anpavlovsk.com.		259200	IN	NS	a.ns.anpavlovsk.com.
+
+;; ADDITIONAL SECTION:
+a.ns.anpavlovsk.com.	259200	IN	A	192.168.1.16
+
+;; Query time: 3 msec
+;; SERVER: 127.0.0.1#53(127.0.0.1)
+;; WHEN: Sun Aug 07 04:26:09 EDT 2022
+;; MSG SIZE  rcvd: 88
+````
