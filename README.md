@@ -186,12 +186,12 @@ google.com.		119	IN	A	142.250.75.14
 ````
 cd /etc/service/tinydns/root/ 
 ./add-ns anpavlovsk.com 192.168.1.16 
-./add-ns 0.168.192.in-addr.arpa 192.168.1.16
+./add-ns 1.168.192.in-addr.arpa 192.168.1.16
 ./add-host anpavlovsk.com 192.168.1.16 
 ./add-host mail.anpavlovsk.com 192.168.1.100 
 make
 ````
-Checking
+Checking DNS records
 ````
 dig anpavlovsk.com @127.0.0.1
 ````
@@ -251,4 +251,51 @@ a.ns.anpavlovsk.com.	259200	IN	A	192.168.1.16
 ;; SERVER: 127.0.0.1#53(127.0.0.1)
 ;; WHEN: Sun Aug 07 04:26:09 EDT 2022
 ;; MSG SIZE  rcvd: 88
+````
+checking PTR record or reverse DNS
+````
+dig -x 192.168.1 @127.0.0.1
+````
+Output
+````
+; <<>> DiG 9.16.27-Debian <<>> -x 192.168.1 @127.0.0.1
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 64038
+;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 0
+;; WARNING: recursion requested but not available
+
+;; QUESTION SECTION:
+;1.168.192.in-addr.arpa.		IN	PTR
+
+;; AUTHORITY SECTION:
+1.168.192.in-addr.arpa.	2560	IN	SOA	a.ns.1.168.192.in-addr.arpa. hostmaster.1.168.192.in-addr.arpa. 1659268964 16384 2048 1048576 2560
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.1#53(127.0.0.1)
+;; WHEN: Sun Aug 07 04:59:08 EDT 2022
+;; MSG SIZE  rcvd: 92
+````
+````
+tinydns-get any anpavlovsk.com 127.0.0.1
+````
+Output
+````
+255 anpavlovsk.com:
+130 bytes, 1+3+0+1 records, response, authoritative, noerror
+query: 255 anpavlovsk.com
+answer: anpavlovsk.com 2560 SOA a.ns.anpavlovsk.com hostmaster.anpavlovsk.com 1659268964 16384 2048 1048576 2560
+answer: anpavlovsk.com 259200 NS a.ns.anpavlovsk.com
+answer: anpavlovsk.com 86400 A 192.168.1.16
+additional: a.ns.anpavlovsk.com 259200 A 192.168.1.16
+````
+````
+tinydns-get ptr 1.168.192.in-addr.arpa 127.0.0.1
+````
+Output
+````
+12 1.168.192.in-addr.arpa:
+92 bytes, 1+0+1+0 records, response, authoritative, noerror
+query: 12 1.168.192.in-addr.arpa
+authority: 1.168.192.in-addr.arpa 2560 SOA a.ns.1.168.192.in-addr.arpa hostmaster.1.168.192.in-addr.arpa 1659268964 16384 2048 1048576 2560
 ````
